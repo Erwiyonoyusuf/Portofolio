@@ -8,42 +8,11 @@ $(function () {
     forms.on('submit', function (event) {
         const form = $(this);
 
-        var actionInput = $(this).find("input[name='action']");
-
         if (!form[0].checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
-        } else {
-            event.preventDefault();
-            $('.submit_form').html('Sending...');
-            $('.btn_submit-subscribe').html('Sending...');
-            const toast = new bootstrap.Toast($('.success_msg')[0]);
-            const errtoast = new bootstrap.Toast($('.error_msg')[0]);
-            var formData = forms.serialize();
-            $.ajax({
-                type: "POST",
-                url: "php/form_process.php",
-                data: formData,
-                success: function (response) {
-                    if (response == 'success') {
-                        if (actionInput.length > 0) {
-                            $('.btn_submit-subscribe').html('SUBSCRIBE NOW');
-                            const toast_subscribe = new bootstrap.Toast($('.success_msg_subscribe')[0]);
-                            toast_subscribe.show();
-                        } else {
-                            toast.show()
-                            $('.submit_form').html('Send Message');
-                        }
-
-                    } else {
-                        errtoast.show()
-                        $('.submit_form').html('Send Message');
-                        $('.btn_submit-subscribe').html('SUBSCRIBE NOW');
-                    }
-                }
-            });
-        }
-
+        } 
+        // Tidak mencegah submit default, biarkan form submit ke Formspree
         form.addClass('was-validated');
     });
 });
